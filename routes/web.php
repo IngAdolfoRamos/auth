@@ -11,9 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::get('/','Auth\LoginController@showLoginForm');
+
+Route::get('/dashboard','DashboardController@index')
+    ->name('dashboard');
+
+Route::post('logout','Auth\LoginController@logout')
+    ->name('logout');
 
 Route::post('/login', 'Auth\LoginController@login')
     ->name('login');
