@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest', ['only' => 'showLoginForm']);
+    }
+
     public function login()
     {
         $credentials = $this->validate(request(),[
@@ -16,9 +21,21 @@ class LoginController extends Controller
 
         if(Auth::attempt($credentials))
         {
-            return "Si";
+            return redirect()->route('dashboard');
         }
-        return back()->withErrors(['email' => 'Verifica tu usuario y contraseña'])
+        return back()->withErrors(['email' => 'Verifica tu usuario y/o contraseña'])
             ->withInput(request(['email']));
+    }
+
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect('/');
     }
 }
