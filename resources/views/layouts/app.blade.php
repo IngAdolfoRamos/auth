@@ -11,6 +11,9 @@
 <body>
     <div class="container">
         <hr>
+        @if(session()->has('flash'))
+            <div class="alert alert-danger lead">{{ session('flash') }}</div>
+        @endif
         @yield('content')
     </div>
 </body>
